@@ -18,9 +18,15 @@
 
 package de.tuberlin.dima.flinkhandson.matrices;
 
+import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
+import org.apache.flink.api.java.aggregation.Aggregations;
+import org.apache.flink.api.java.operators.AggregateOperator;
 import org.apache.flink.api.java.operators.DataSource;
+import org.apache.flink.api.java.tuple.Tuple1;
+import org.apache.flink.util.Collector;
+import org.apache.flink.api.common.functions.FlatMapFunction;
 
 public class Trace {
 
@@ -38,13 +44,40 @@ public class Trace {
         env.fromElements(new Cell(0, 1, 1), new Cell(0, 2, 3), new Cell(1, 0, 1), new Cell(1, 1, 2),
                          new Cell(2, 1, 1), new Cell(2, 2, 1));
 
+    DataSet<Double> trace =
+            matrix.flatMap(new ValueExtraction()).aggregate(Aggregations.SUM, 0).flatMap(new TupleToDouble());
 
-    // IMPLEMENT THIS STEP
-    DataSet<Double> trace = null;
 
     trace.print();
 
     env.execute();
 
   }
+
+
+  // User-defined functions
+  public static final class ValueExtraction implements FlatMapFunction<Cell, Tuple1<Double>> {
+
+    @Override
+    public void flatMap(Cell value, Collector<Tuple1<Double>> out) {
+
+      if (value.i == value.j) {
+        out.collect(new Tuple1<Double>(value.value));
+      } else {
+        out.collect(new Tuple1<Double>(0.0));
+      }
+
+    }
+  }
+
+  // User-defined functions
+  public static final class TupleToDouble implements FlatMapFunction<Tuple1<Double>, Double> {
+
+    @Override
+    public void flatMap(Tuple1<Double> value, Collector<Double> out) {
+        out.collect(value.f0);
+
+    }
+  }
+
 }

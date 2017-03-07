@@ -48,7 +48,10 @@ public class BooksAndAuthors {
            .types(Integer.class, Short.class, String.class);
 
     // IMPLEMENT THIS STEP
-    DataSet<Tuple2<String, String>> bookAndAuthor = null;
+    DataSet<Tuple2<String, String>> bookAndAuthor = authors.join(books).where(0).equalTo(0).projectFirst(1).projectSecond(2)
+              .types(String.class, String.class);
+
+      bookAndAuthor.print();
 
     bookAndAuthor.writeAsCsv(Config.outputPathTo("bookAuthorJoin"), FileSystem.WriteMode.OVERWRITE);
 

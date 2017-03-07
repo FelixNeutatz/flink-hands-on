@@ -6,9 +6,11 @@
   <artifactId>flink-hands-on</artifactId>
   <version>1.0</version>
   <name>Flink: Hands-on</name>
-
+    
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <flink.version>1.2.0</flink.version>
+    <junit.version>4.11</junit.version>
   </properties>
 
   <dependencies>
@@ -20,7 +22,7 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-java</artifactId>
-      <version>0.8.1</version>
+      <version>${flink.version}</version>
         <exclusions>
           <exclusion>
             <groupId>org.slf4j</groupId>
@@ -32,63 +34,159 @@
          </exclusion>
         </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-clients</artifactId>
-      <version>0.8.1</version>
-        <exclusions>
-            <exclusion>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-            </exclusion>
-            <exclusion>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-            </exclusion>
-        </exclusions>
-    </dependency>
-	<dependency>
-		<groupId>org.apache.flink</groupId>
-		<artifactId>flink-streaming-core</artifactId>
-		<version>0.8.1</version>
-	  </dependency>
 
-  </dependencies>
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-scala_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.0.2</version>
-          <configuration>
-            <encoding>UTF-8</encoding>
-            <source>1.6</source>
-            <target>1.6</target>
-            <optimize>true</optimize>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-streaming-java_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
 
-  <profiles>
-    <profile>
-      <id>skipTests</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-      </properties>
-    </profile>
-    <profile>
-      <id>check</id>
-      <properties>
-        <maven.test.skip>false</maven.test.skip>
-      </properties>
-    </profile>
-  </profiles>
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-streaming-scala_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
 
-</project>
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-gelly_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-table_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-gelly-scala_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-connector-kafka-0.10_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-streaming-contrib_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-connector-twitter_2.10</artifactId>
+          <version>${flink.version}</version>
+      </dependency>
+
+      
+
+      
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-test-utils_2.10</artifactId>
+                <version>${flink.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>  <!-- declare the exclusion here -->
+                        <groupId>org.apache.directory.jdbm</groupId>
+                        <artifactId>apacheds-jdbm1</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+      <dependency>
+          <groupId>org.apache.flink</groupId>
+          <artifactId>flink-test-utils-junit</artifactId>
+          <version>${flink.version}</version>
+          <scope>test</scope>
+          <exclusions>
+              <exclusion>  <!-- declare the exclusion here -->
+                  <groupId>org.apache.directory.jdbm</groupId>
+                  <artifactId>apacheds-jdbm1</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>${junit.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      
+      
+      
+            <dependency>
+                <groupId>org.jfree</groupId>
+                <artifactId>jfreechart</artifactId>
+                <version>1.0.19</version>
+            </dependency>
+      
+      
+      
+            <dependency>
+                <groupId>com.data-artisans</groupId>
+                <artifactId>flink-training-exercises</artifactId>
+                <version>0.6</version>
+            </dependency>
+      
+      
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.8.5</version>
+                <scope>test</scope>
+            </dependency>
+      
+      
+        </dependencies>
+      
+        <build>
+          <pluginManagement>
+            <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                  <encoding>UTF-8</encoding>
+                  <source>1.8</source>
+                  <target>1.8</target>
+                  <optimize>true</optimize>
+                </configuration>
+              </plugin>
+            </plugins>
+          </pluginManagement>
+        </build>
+      
+        <profiles>
+          <profile>
+            <id>skipTests</id>
+            <activation>
+              <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+              <maven.test.skip>true</maven.test.skip>
+            </properties>
+          </profile>
+          <profile>
+            <id>check</id>
+            <properties>
+              <maven.test.skip>false</maven.test.skip>
+            </properties>
+          </profile>
+        </profiles>
+      
+      </project>
+      

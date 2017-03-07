@@ -20,8 +20,8 @@ public class AttackRecognition {
 
     StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
 
-    DataStream<LogFileEntry> logStream =
-        env.readTextStream(Config.outputPathToLogFile())
+    DataStream<LogFileEntry> logStream = 
+        env.readTextFile(Config.outputPathToLogFile())
            .map(new MapFunction<String, LogFileEntry>() {
                private LogFileEntry e = new LogFileEntry();
 
